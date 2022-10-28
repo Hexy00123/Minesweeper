@@ -1,0 +1,5 @@
+opencv-python~=4.6.0.66
+numpy~=1.23.4
+qimage2ndarray~=1.9.0
+mss~=6.1.0
+PyQt5~=5.15.7

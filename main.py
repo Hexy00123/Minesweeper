@@ -1,41 +1,54 @@
-import cv2 # image capture
-import numpy as np # work with images
-import qimage2ndarray # image type converter
-import PIL # image wrapper
-from PIL import ImageGrab
+import cv2  # image capture
+import numpy as np  # work with images
+import qimage2ndarray  # image type converter
+from mss import mss  # screen capturer
+
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets # GUI
+
+from PyQt5 import QtCore, QtGui, QtWidgets  # GUI
 from PyQt5 import uic
 
+from Detector import Detector
 from constants import *
+
 
 class Window(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('Main_window.ui', self)
+        uic.loadUi(UI_PATH, self)
+        self.init_UI_objects()
 
-        self.frame_timer = QtCore.QTimer()
-        self.frame_timer.timeout.connect(self.take_screenshot)
-        self.frame_timer.start(int(1000 / fps))
-        self.moving_frame_origin_x.setText("63")
-        self.moving_frame_origin_y.setText("303")
+        self.screen_capture = mss()
+        self.current_frame: np.array
+        self.detector = Detector(TYPES_OF_CELLS)
 
+        # self.frame_timer = QtCore.QTimer()
+        # self.frame_timer.timeout.connect(self.take_screenshot)
+        # self.frame_timer.start(int(1000 / FPS))
+
+    def init_UI_objects(self):
+        self.main_frame: QtWidgets.QLabel
+
+        self.updateFieldButton: QtWidgets.QPushButton
+        self.updateFieldButton.clicked.connect(self.take_screenshot)
 
     def take_screenshot(self):
-        try: # 63, 290
-            x, y = int(self.moving_frame_origin_x.text()), int(self.moving_frame_origin_y.text())
-            img = ImageGrab.grab(bbox=(x, y, x + ceil_size[1] * map_size[1], y + ceil_size[0] * map_size[0]))
+        frame = self.screen_capture.grab({
+            'top': TOP_COORDINATE,
+            'left': LEFT_COORDINATE,
+            'width': CELL_SIZE["width"] * MAP_SIZE["width"],
+            'height': CELL_SIZE["height"] * MAP_SIZE["height"]
+        })
+        frame = np.array(frame)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        self.current_frame = frame
 
-            frame = np.array(img)
-            image = qimage2ndarray.array2qimage(frame)
-            self.main_frame.setPixmap(QtGui.QPixmap.fromImage(image))
-        except Exception as e:
-            print(e)
+        frame = qimage2ndarray.array2qimage(frame)
+        self.main_frame.setPixmap(QtGui.QPixmap.fromImage(frame))
+
 
 if __name__ == "__main__":
     application = QtWidgets.QApplication(sys.argv)
     window = Window()
     window.show()
     sys.exit(application.exec())
-
-
