@@ -10,7 +10,7 @@
     "height": 45
   },
   "FPS": 10,
-  "TOP_COORDINATE": 343,
+  "TOP_COORDINATE": 400,
   "LEFT_COORDINATE": 63,
   "CUTTING": 5,
 
@@ -23,7 +23,7 @@
     "F": "templates/closed_cell_flag_d.png",
     "1": "templates/opened_cell_1_d.png",
     "2": "templates/opened_cell_2_d.png",
-    "3": "templates/opened_cell_3_d.png",
+    "3": "templates/opened_cell_3_l.png",
     "4": "templates/opened_cell_4_d.png",
     "5": "templates/opened_cell_5_l.png"
   }

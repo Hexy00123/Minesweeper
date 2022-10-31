@@ -9,6 +9,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets  # GUI
 from PyQt5 import uic
 
 from Detector import Detector
+from Map import Map
 from constants import *
 
 
@@ -20,7 +21,9 @@ class Window(QtWidgets.QMainWindow):
 
         self.screen_capture = mss()
         self.current_frame: np.array
+
         self.detector = Detector(TYPES_OF_CELLS)
+        self.map = Map()
 
         # self.frame_timer = QtCore.QTimer()
         # self.frame_timer.timeout.connect(self.take_screenshot)
@@ -45,6 +48,14 @@ class Window(QtWidgets.QMainWindow):
 
         frame = qimage2ndarray.array2qimage(frame)
         self.main_frame.setPixmap(QtGui.QPixmap.fromImage(frame))
+        self.analyse_frame()
+
+    def analyse_frame(self):
+        try:
+            self.map.upload_map(self.detector.detect_frame(self.current_frame))
+            print(self.map.analyse())
+        except Exception as e:
+            print(e)
 
 
 if __name__ == "__main__":
