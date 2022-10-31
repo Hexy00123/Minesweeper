@@ -30,18 +30,21 @@ class Map():
     def analyse(self) -> dict:
         should_be_open = set()
         should_be_flag = set()
-        for x in range(self.width):
-            for y in range(self.height):
-                neighbourhood = self.get_neighbourhood(x, y)
-                if self.map[y][x] not in 'FOC':
-                    if int(self.map[y][x]) - neighbourhood['F'][0] == 0 and neighbourhood['C'][0] != 0:
-                        for cell in self.get_neighbours(x, y):
-                            if self.map[cell[1]][cell[0]] == 'C':
-                                should_be_open.add(cell)
-                    if int(self.map[y][x]) - neighbourhood['F'][0] == neighbourhood['C'][0] and neighbourhood['C'][0]:
-                        for cell in self.get_neighbours(x, y):
-                            if self.map[cell[1]][cell[0]] == 'C':
-                                should_be_flag.add(cell)
+        for deep in range(4):
+            for x in range(self.width):
+                for y in range(self.height):
+                    neighbourhood = self.get_neighbourhood(x, y)
+                    if self.map[y][x] not in 'FOC':
+                        if int(self.map[y][x]) - neighbourhood['F'][0] == 0 and neighbourhood['C'][0] != 0:
+                            for cell in self.get_neighbours(x, y):
+                                if self.map[cell[1]][cell[0]] == 'C':
+                                    self.map[cell[1]][cell[0]] = 'O'
+                                    should_be_open.add(cell)
+                        if int(self.map[y][x]) - neighbourhood['F'][0] == neighbourhood['C'][0] and neighbourhood['C'][0]:
+                            for cell in self.get_neighbours(x, y):
+                                if self.map[cell[1]][cell[0]] == 'C':
+                                    self.map[cell[1]][cell[0]] = 'F'
+                                    should_be_flag.add(cell)
         return {
             'open': should_be_open,
             'flag': should_be_flag
