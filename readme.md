@@ -1,6 +1,6 @@
 # Sapper
 ## Idea of the project 
-On the infinite soace of youtube many videos, where some alghoritm can solve the simple and old game many times faster than any person in the world. After watching them I wanted to create something, which works like this, but with my personal view on it. 
+On the infinite space of youtube many videos, where some alghoritm can solve the simple and old game many times faster than any person in the world. After watching them I wanted to create something, which works like this, but with my personal view on it. 
 For the project was decided to take a Minesweeper game in its implementation from google and write an app, which can help user to play to it. 
 
 ## Description 
