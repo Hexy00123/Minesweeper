@@ -9,4 +9,9 @@ In the future version I am planning to add some checkboxes to choose the level o
 
 ## Technologies 
 ### Computer vision technologies 
-To detect cells of the map it was used the mss library for image capture. After detecting the mask was put on the main frame, which checks if the pixel components satisfy the special condition (given as inequality for h, s, and v component). 
+To detect cells of the map it was used the mss library for image capture. After detecting the mask was put on the main frame, which checks if the pixel components satisfy the special condition (given as inequality for h, s, and v 
+### User interface 
+Developed with using the PyQt5 library, to allow user to choose options of helping such as: 
+1) Show the places for flags
+2) Show the places of bombs
+3) Choose the depth of map analysis
