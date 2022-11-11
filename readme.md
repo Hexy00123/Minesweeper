@@ -7,6 +7,6 @@ For the project was decided to take a Minesweeper game in its implementation fro
 The project has user interface, which is streaming the image from game map to itself and process it.
 In the future version I am planning to add some checkboxes to choose the level of hints and detecting depth. 
 
-##Technologies 
-###Computer vision technologies 
+## Technologies 
+### Computer vision technologies 
 To detect cells of the map it was used the mss library for image capture. After detecting the mask was put on the main frame, which checks if the pixel components satisfy the special condition (given as inequality for h, s, and v component). 
